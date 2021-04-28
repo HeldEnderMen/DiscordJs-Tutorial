@@ -8,6 +8,7 @@ module.exports = {
   description: "Pong!",
   usage: "Ping",
   run: async (client, message, args) => {
+    message.delete();
     const embed = new MessageEmbed()
       .setColor(Color)
       .setDescription(`Pong - ${client.ws.ping}ms`)
