@@ -1,17 +1,18 @@
 const Discord = require("discord.js");
-const fs = require("fs");
+const fs = require("fs")
 const client = new Discord.Client();
-const { Prefix, Token, Color } = require("./config.js");
+const { default_prefix, Token, Color} = require("./config.json");
 
-client.on("ready", async () => {
-  console.log(`Hey HeldEnderMen! I am Ready To Server`);
-  client.user
-    .setActivity(`Servers : ${await client.guilds.cache.size} | Users : ${await client.users.cache.size}`, { type: "Watching" })
-    .catch(error => console.log(error));
-});
+client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
 
-//Command Handler
-let modules = ["fun", "info", "moderation"];
+client.on("ready", async message =>{
+  console.log("Hey I am Online");
+  client.user.setActivity("Minecraft lol", {type: 'PLAYING'})
+})
+
+
+let modules = ["info"];
 
 modules.forEach(function(module) {
   fs.readdir(`./commands/${module}`, function(err, files) {
@@ -22,7 +23,7 @@ modules.forEach(function(module) {
     files.forEach(function(file) {
       if (!file.endsWith(".js")) return;
       let command = require(`./commands/${module}/${file}`);
-      console.log(`${command.name} Command Has Been Loaded - ✅`);
+      console.log(`${command.name} Command Has Been Loaded`);
       if (command.name) client.commands.set(command.name, command);
       if (command.aliases) {
         command.aliases.forEach(alias =>
@@ -32,7 +33,7 @@ modules.forEach(function(module) {
       if (command.aliases.length === 0) command.aliases = null;
     });
   });
-});
+}) 
 
 client.on("message", async message => {
   if (message.channel.type === "dm") return;
@@ -40,32 +41,27 @@ client.on("message", async message => {
   if (!message.guild) return;
   if (!message.member)
     message.member = await message.guild.fetchMember(message);
-
-  if (!message.content.startsWith(Prefix)) return;
-
+  
+  if (!message.content.startsWith(default_prefix)) return;
+  
   const args = message.content
-    .slice(Prefix.length)
-    .trim()
-    .split(" ");
+  .slice(default_prefix.length)
+  .trim()
+  .split(" ");
+  
   const cmd = args.shift().toLowerCase();
-
+  
   if (cmd.length === 0) return;
-
+  
   let command =
-    client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
-
+      client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd))
   if (!command) return;
-
   if (command) {
-    if (!message.guild.me.hasPermission("ADMINISTRATOR"))
-      return message.channel.send(
-        "I Don't Have Enough Permission To Use This Or Any Of My Commands | Require : Administrator"
-      );
-    command.run(client, message, args);
+    if(!message.guild.me.hasPermission("ADMINISTRATOR"))
+    return message.channel.send(
+    "I don't have enough permission to use this command! Require: Administrator")
+  command.run(client, message, args);
   }
-  console.log(
-    `User : ${message.author.tag} (${message.author.id}) Server : ${message.guild.name} (${message.guild.id}) Command : ${command.name}`
-  );
-});
+})
 
 client.login(Token);
