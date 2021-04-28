@@ -1,5 +1,5 @@
 {
   "Token": "Token",
-  "default_prefix": "-",
-  "Color": "PURPLE",
+  "default_prefix": "YOUR PREFIX",
+  "Color": "#HEX color / COLOR in CAPITAL LETTERS",
 }
