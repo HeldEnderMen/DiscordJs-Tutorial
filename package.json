@@ -1,7 +1,7 @@
 {
-  "name": "EndCity Ship",
-  "version": "1.1.0",
-  "description": "Multi-Purpose Bot Created By HeldEnderMen#7093",
+  "name": "Bot Name",
+  "version": "0.1",
+  "description": "Multi-Purpose Bot",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
