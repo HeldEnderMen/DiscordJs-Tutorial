@@ -1,0 +1,31 @@
+{
+  "name": "EndCity Ship",
+  "version": "1.1.0",
+  "description": "Multi-Purpose Bot Created By HeldEnderMen#7093",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "discord.js": "^12.1.1",
+    "node-fetch": "^2.6.1",
+    "figlet": "^1.5.0",
+    "jimp": "^0.6.0",
+    "util": "^0.12.3",
+    "ms": "^2.1.2",
+    "ytdl-core": "^1.0.2",
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "repository": {
+    "url": ""
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express"
+  ]
+}
